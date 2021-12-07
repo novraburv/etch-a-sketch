@@ -1,5 +1,5 @@
 * {
-	/*outline: red dashed 1px;*/
+/* 	outline: red dashed 1px; */
 }
 
 body {
@@ -10,7 +10,7 @@ body {
 
 	height: 100vh;
 	
-	background-color: gray;
+	background-color: #2f2f2f;
 
 }
 
@@ -35,4 +35,36 @@ body {
 	min-height: 1px;
 	min-width: 1px;
 	flex-grow: 1;
+}
+
+.nav,
+.slider {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.slider {
+    background-color: white;
+    border-radius: 3px;
+    padding: 5px 0;
+}
+
+.range {
+    width: 90%;
+}
+
+.range::-webkit-slider-runnable-track,
+.range::-moz-range-track {
+    background-color: gold;
+}
+
+.range::-webkit-slider-thumb:hover,
+.range::-moz-range-thumb:hover {
+    background-color: #2f2f2f;
+}
+
+.output {
+    display: block;
 }

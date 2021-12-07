@@ -25,12 +25,26 @@ function setMouseEffect() {
 	})
 }
 
-const reset = document.querySelector('#reset');
-reset.addEventListener('click', () => {
-  const container = document.querySelector('.container');
-  container.innerHTML = '';
-  setGrid(16);
-  setMouseEffect();
-})
+function resetGrid(size) {
+    const container = document.querySelector('.container');
+    container.innerHTML = '';
+    setGrid(size);
+    setMouseEffect();
+}
 
 setGrid(16);
+
+
+const size = document.querySelector('#size');
+const sizeOutput = document.querySelector('#sizeOutput');
+const reset = document.querySelector('#reset');
+
+size.addEventListener('input', (e) => {
+    resetGrid(e.target.value);
+    sizeOutput.value = e.target.value;
+})
+sizeOutput.value = size.value;
+
+reset.addEventListener('click', () => {
+    resetGrid(size.value)
+})
