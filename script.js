@@ -1,5 +1,8 @@
-function setGrid(size) {
+function setGrid(size = 16) {
 	const container = document.querySelector('.container');
+	if (container.innerHTML) {
+		container.innerHTML = '';
+	}
 	for (let rows = 0; rows < size; rows++) {
 		const row = document.createElement('div');
 		row.classList.add('row');
@@ -13,38 +16,54 @@ function setGrid(size) {
 	setMouseEffect();
 }
 
-function setMouseEffect() {
-	const pixels = document.querySelectorAll('.pixel')
+function setMouseEffect(state = 'black', statesArr = ['black'] ) {
+	const pixels = document.querySelectorAll('.pixel');
+	const index = statesArr.indexOf(state);
+
 	pixels.forEach(pixel => {
 		pixel.addEventListener('mouseenter', () => {
-			pixel.style.backgroundColor = "gray";
+			pixel.style.backgroundColor = 'gold';
 		})
 		pixel.addEventListener('mouseout', () => {
-			pixel.style.backgroundColor = "black";
+			const colorLeft = ['black', getRandomColor(), 'white'];
+			pixel.style.backgroundColor = colorLeft[index];		
 		})
 	})
 }
 
-function resetGrid(size) {
-    const container = document.querySelector('.container');
-    container.innerHTML = '';
-    setGrid(size);
-    setMouseEffect();
+function getRandomColor() {
+	const base16 = "0123456789ABCDEF";
+	let hex = '';
+	for (i = 0; i < 6; i++) {
+		const index = Math.floor(Math.random() * 16);
+		hex += base16[index]
+	}
+	return '#' + hex;
 }
 
-setGrid(16);
+// start up call
+setGrid();
 
-
+// events for size slider and reset button
 const size = document.querySelector('#size');
 const sizeOutput = document.querySelector('#sizeOutput');
 const reset = document.querySelector('#reset');
 
 size.addEventListener('input', (e) => {
-    resetGrid(e.target.value);
     sizeOutput.value = e.target.value;
+    setGrid(e.target.value);
 })
 sizeOutput.value = size.value;
 
 reset.addEventListener('click', () => {
-    resetGrid(size.value)
+    setGrid(size.value)
+})
+
+// event for different color modes
+const colorModes = ['black', 'rainbow', 'erase'];
+colorModes.forEach(x => {
+	const state = document.querySelector('#' + x);
+	state.addEventListener('click', () => {
+		setMouseEffect(x, colorModes)
+	})
 })
